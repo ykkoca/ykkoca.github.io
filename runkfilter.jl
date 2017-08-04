@@ -1,4 +1,4 @@
-close all
+import PyPlot
 
 gdp = [17459612.48
 17664374.58
@@ -70,21 +70,22 @@ gdp = [17459612.48
 31762066.9
 32175827.49];
 
-Y = log(gdp);
-B = [0 ; 0];
-F = [1 1;0 1];
-H = [1 0];
-P0 =[1/10 0;0 1/10];
-Q = [3/10^4 0 ; 0 0];
-R = [1600*3/10^4];
-u = zeros(size(H,2), size(Y,1));
-X0 = [Y(1); 0.012];
+include("kfilter.jl")
 
-[Xf, Pf, Xs, Ps] = kfilter(Y, X0, F, B, u, R, Q, H, P0, 'smoother');
+Y = log.(gdp)
+B = [0 ; 0]
+F = [1 1;0 1]
+H = [1 0]
+P0 =[1/10 0;0 1/10]
+Q = [3/10^4 0 ; 0 0]
+R = [1600*3/10^4]
+u = zeros(size(H,2), size(Y,1))
+X0 = [Y[1]; 0.012]
 
-x = 1:size(Y,1);
+Xf, Pf, Xs, Ps = kfilter(Y, X0, F, B, u, R, Q, H, P0, "smoother");
 
-plot(x,Y-Xf(1,:)',x,Y-Xs(1,:)');
-legend('Filtered Series', 'Smoothed Series')
-xlabel('Time');
-ylabel('Output Gap');
+PyPlot.plot(Y-Xf[1,:], label="Filtered Series")
+PyPlot.plot(Y-Xs[1,:], label="Smoothed Series"),
+PyPlot.legend()
+PyPlot.xlabel("Time")
+PyPlot.ylabel("Output Gap")
