@@ -35,7 +35,7 @@ i=1;
 % Forward Pass
 while i < n
 
-    Xu(i+1,:) = Xf(i,:)*F; % + B*u(:,i);
+    Xu(i+1,:) = Xf(i,:)*F;
     Pu(i+1,:,:) = F'*squeeze(Pf(i,:,:))*F + Q;
 
     K = squeeze(Pu(i,:,:))*H/(H'*squeeze(Pu(i,:,:))*H + R);
