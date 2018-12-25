@@ -71,20 +71,19 @@ gdp = [17459612.48
 32175827.49];
 
 Y = log(gdp);
-B = [0 ; 0];
-F = [1 1;0 1];
-H = [1 0];
-P0 =[1/10 0;0 1/10];
-Q = [3/10^4 0 ; 0 0];
-R = [1600*3/10^4];
-u = zeros(size(H,2), size(Y,1));
-X0 = [Y(1); 0.012];
+F = [1 1 0;0 1 0; 0 0 0]';
+H = [1 0 1]';
+P0 =[1/100 0 0;0 1/1000 0; 0 0 1/10];
+Q = [0 0 0; 0 1/10^3 0; 0 0 1/10];
+R = [0];
+X0 = [Y(1); 0.01 ; 0.1]';
 
-[Xf, Pf, Xs, Ps] = kfilter(Y, X0, F, B, u, R, Q, H, P0, 'smoother');
+[Xf, Pf, Xs, Ps] = kfilter(Y, X0, F, R, Q, H, P0, 'smoother');
 
-x = 1:size(Y,1);
 
-plot(x,Y-Xf(1,:)',x,Y-Xs(1,:)');
+xAx = 1:size(Y,1);
+figure;
+plot(xAx',[Xf_2(3,:)' Xs_2(3,:)']);
 legend('Filtered Series', 'Smoothed Series')
 xlabel('Time');
 ylabel('Output Gap');

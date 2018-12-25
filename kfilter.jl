@@ -1,78 +1,72 @@
-function kfilter(Y, X0, F, B, u, R, Q, H, P0, s)
+function kfilter(Y::Array, X0, F, R, Q, H, P0, s)
 
 #=
-Input descriptions:
+% Input descriptions:
 
-Signal Equation: Y = H*X + u
-State Equation: X = F*X(-1) + u*B + w
+Signal Equation: Y = X*H + v
+State Equation: X = X(-1)*F + w
 
-R = u*u'
-Q = w*w'
+R = v*v', mxm matrix
+Q = w*w', kxk matrix
 
 Y: nxm matrix,
 
-X0: kx1 matrix
+X0: 1xk matrix
 F: mxk matrix
 
-B: mxk matrix
-u: kx1 matrix
+H: kxm matrix
 
-R: m*m matrix
-Q: k*k matrix
-
-H: k*k matrix
-
-P0: k*k matrix
+P0: kxk matrix
 =#
 
 n = size(Y,1)
 
-Xu = Array{Float64}(size(X0,1),n)
-Xf = Array{Float64}(size(X0,1),n)
-Xs = Array{Float64}(size(X0,1),n)
+Xu = Array{Array{Float64,2}}(n)
+Xf = Array{Array{Float64,2}}(n)
+Xs = Array{Array{Float64,2}}(n)
 
 Pu = Array{Array{Float64,2}}(n)
 Pf = Array{Array{Float64,2}}(n)
 
 
-Xu[:,1] = X0
+Xu[1] = X0
 Pu[1] = P0
 
-K = Pu[1]*H'*inv(H*Pu[1]*H' + R)
+K = Pu[1]*H/(H'*Pu[1]*H + R)
 
-Xf[:,1] = Xu[:,1] + K*(Y[1,:] - H*Xu[:,1])
-Pf[1] = Pu[1] - K*H*Pu[1]
+Xf[1] = (Xu[1]' + K*(Y[1,:] - Xu[1]*H)')'
+Pf[1] = Pu[1] - K*H'*Pu[1]
 
 i = 1
 
 # Forward Pass
 while i < n
 
-    Xu[:,i+1] = F*Xf[:,i] #+ B*u[:,i]
-    Pu[i+1] = F*Pf[i]*F' + Q
+    Xu[i+1] = Xf[i]*F
+    Pu[i+1] = F'*Pf[i]*F + Q
 
-    K = Pu[i]*H'*inv(H*Pu[i]*H' + R)
+    K = Pu[i]*H*inv(H'*Pu[i]*H + R)
 
-    Xf[:,i+1] = Xu[:,i+1] + K*(Y[i+1,:] - H*Xu[:,i+1])
-    Pf[i+1] = Pu[1] - K*H*Pu[i]
+    Xf[i+1] = (Xu[i+1]' + K*(Y[i+1,:] - Xu[i+1]*H)')'
+    Pf[i+1] = Pu[1] - K*H'*Pu[i]
 
     i += 1
 end
 
+#Smoother
+if s == "smoother"
+
 Ps = Array{Array{Float64,2}}(n)
 
-Xs[:,n] = Xf[:,n]
+Xs[n] = Xf[n]
 Ps[n] = Pf[n]
-
-if s == "smoother"
 
 for i = n-1:-1:1
 
-    L = Pf[i]*F'*inv(Pu[i+1])
+    L = (Pf[i]*F)*inv(Pu[i+1])
 
-    Xs[:,i] = Xf[:,i] + L*(Xs[:,i+1] - Xu[:,i+1])
+    Xs[i] = (Xf[i]' + L*(Xs[i+1] - Xu[i+1])')'
     Ps[i] = Pf[i] + L*(Ps[i+1]-Pu[i+1])*L'
-
 
 end
 

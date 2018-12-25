@@ -1,3 +1,6 @@
+
+# Pkg.add("PyPlot") #Add package PyPlot if missing
+
 import PyPlot
 
 gdp = [17459612.48
@@ -72,20 +75,21 @@ gdp = [17459612.48
 
 include("kfilter.jl")
 
-Y = log.(gdp)
-B = [0 ; 0]
-F = [1 1;0 1]
-H = [1 0]
-P0 =[1/10 0;0 1/10]
-Q = [3/10^4 0 ; 0 0]
-R = [1600*3/10^4]
-u = zeros(size(H,2), size(Y,1))
-X0 = [Y[1]; 0.012]
+Y = log(gdp);
+F = [1 1 0; 0 1 0; 0 0 0]';
+H = [1 0 1]';
+P0 =[1/100 0 0;0 1/1000 0; 0 0 1/10];
+Q = [0 0 0; 0 1/10^3 0; 0 0 1/10];
+R = [0];
+X0 = [Y[1] 0.01  0];
 
-Xf, Pf, Xs, Ps = kfilter(Y, X0, F, B, u, R, Q, H, P0, "smoother");
+Xf, Pf, Xs, Ps = kfilter(Y, X0, F, R, Q, H, P0, "smoother");
 
-PyPlot.plot(Y-Xf[1,:], label="Filtered Series")
-PyPlot.plot(Y-Xs[1,:], label="Smoothed Series"),
+Xf = reshape(collect(Iterators.flatten(Xf)),length(X0),size(Y,1))'
+Xs = reshape(collect(Iterators.flatten(Xs)),length(X0),size(Y,1))'
+
+PyPlot.plot(Xf[:,3], label="Filtered Series")
+PyPlot.plot(Xs[:,3], label="Smoothed Series")
 PyPlot.legend()
 PyPlot.xlabel("Time")
 PyPlot.ylabel("Output Gap")
