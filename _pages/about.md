@@ -26,7 +26,6 @@ Limited mobility bias yields overestimation of firm effects in earnings models w
 Teaching Assistant at the University of Southern California for
   * Intermediate Microeconomics
   * Intermediate Macroeconomics
-  * 
   
   
   
