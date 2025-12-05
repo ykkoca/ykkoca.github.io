@@ -12,7 +12,8 @@ I am a PhD candidate in the Economics department of the University of Southern C
 
 ## Research
 
-### [AI Automation and Labor Market Outcomes (Job Market Paper)](/files/jmp_YakupKutsal_Koca.pdf)
+### Job Market Paper
+### [AI Automation and Labor Market Outcomes](/files/jmp_YakupKutsal_Koca.pdf)
 
 Existing measures of occupational AI exposure ignore worker reallocation, failing to capture true economic impact. In this study, I address this by developing a general equilibrium framework that explicitly models the occupational choice problem for workers. Using administrative German data, I recover the unobserved, heterogeneous comparative advantage vectors that drive these choices. I then simulate a productivity-enhancing AI shock derived from task-level automation scores. The results show that the ability to reallocate determines the distribution of welfare gains: *generalists* capture the largest relative wage gains by pivoting to high-growth sectors. Conversely, *specialists*, defined by concentrated comparative advantages, experience significantly smaller gains. This relative penalty affects both low skill workers, whose comparative advantage is confined to manual or service tasks, and high-skill workers who are specialized in certain domains, as the limited transferability of their skills restricts them from accessing the highest returns in the labor market.
 
