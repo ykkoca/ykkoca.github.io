@@ -6,7 +6,7 @@ redirect_from:
   - /about.html
 ---
 
-I am a PhD candidate in the Economics department of the University of Southern California. My main research interests are labor economics and macroeconomics.
+I am a PhD candidate in the Economics department of the University of Southern California.
 
 **I am on the 2025/26 job market!**
 
