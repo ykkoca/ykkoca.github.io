@@ -8,8 +8,6 @@ redirect_from:
 
 I am a PhD candidate in the Economics department of the University of Southern California.
 
-**I am on the 2025/26 job market!**
-
 ## Research
 
 ### Job Market Paper
