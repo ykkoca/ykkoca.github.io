@@ -16,15 +16,13 @@ Existing measures of occupational AI exposure ignore worker reallocation, failin
 
 ## Work in Progress
 
-### Measuring Limited Mobility Bias
+### AI Adoption and the Supply of Expertise
 
-Limited mobility bias yields overestimation of firm effects in earnings models where the income is assumed to be sum of worker and firm effects. While this bias is attempted to be corrected by statistical methods, I aim to measure this bias by looking at the cases with high mobility, such as mass layoffs. With a matched employer-employee data, I focus on the tech layoffs during 2023 and 2024.
+With Serap Inci Ozyer Koca. *Draft soon.*
+
+We study firms' incentives to adopt automation when workers acquire expertise through employment and carry it across firms when they move. We characterize conditions under which experience-based task specialization supports asymmetric adoption at higher costs relative to pre-AI profits than in a homogeneous-worker benchmark. In this equilibrium, the nonadopter employs a more junior-intensive workforce and supplies experienced workers to the adopter.
 
 ## Teaching
 Teaching Assistant at the University of Southern California for
   * Intermediate Microeconomics
   * Intermediate Macroeconomics
-  
-  
-  
-  
